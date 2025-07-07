@@ -26,7 +26,7 @@ public enum Dialect {
   public static Dialect fromString(String db){
     return switch (db.toLowerCase()) {
       case "mysql"->MYSQL;
-      case "postgressql"->POSTGRESQL;
+      case "postgresql"->POSTGRESQL;
       case "oracle"->ORACLE;
       case "sqlserver"->SQLSERVER;
       case "firebird" -> FIREBIRD;
