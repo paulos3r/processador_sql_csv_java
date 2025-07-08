@@ -54,3 +54,12 @@ src/
 - Sanitiza texto para saída limpa.
 
 - Exibe mensagens úteis no console para acompanhamento.
+
+oracle precisa ser local
+
+mvn install:install-file \
+-Dfile=ojdbc21.jar \
+-DgroupId=com.oracle.database.jdbc \
+-DartifactId=ojdbc21 \
+-Dversion=21.7.0.0 \
+-Dpackaging=jar

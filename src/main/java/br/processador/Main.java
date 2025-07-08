@@ -22,7 +22,6 @@ public class Main {
       System.out.print("Informe o host: ");
       String host = scanner.nextLine().trim();
 
-
       System.out.print("Informe a porta: ");
       String port = scanner.nextLine().trim();
 

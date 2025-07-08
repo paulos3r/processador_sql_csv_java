@@ -15,44 +15,44 @@
     </properties>
 
     <dependencies>
-        <!-- MySQL Connector/J -->
+
+        <!-- ✅ MySQL Connector/J -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <!-- <version>8.4.0</version> Versão mais recente e compatível -->
         </dependency>
 
-        <!-- PostgreSQL JDBC Driver -->
+        <!-- ✅ PostgreSQL JDBC Driver -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <version>42.7.3</version> <!-- Versão atual e estável -->
         </dependency>
 
-        <!-- Firebird JDBC Driver
+        <!-- ✅ Firebird JDBC Driver compatível com Java 21 -->
         <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
-            <artifactId>jaybird-jdk17</artifactId>
-            <version>4.0.5.java11</version>  compatível com Java 17
-        </dependency> -->
+            <artifactId>jaybird</artifactId>
+            <version>5.0.1.java11</version>
+        </dependency>
 
-        <!-- Oracle JDBC Driver -->
-        <!-- Atenção: Oracle JDBC não está no Maven Central. -->
-        <!-- Você pode instalar localmente ou usar repositório Oracle se tiver acesso -->
-        <!-- Aqui, exemplo para Oracle 21c -->
-        <!-- mvn install:install-file -Dfile=ojdbc21.jar -DgroupId=com.oracle.database.jdbc -DartifactId=ojdbc21 -Dversion=21.7.0.0 -Dpackaging=jar -->
-        <!--   <dependency>
-              <groupId>com.oracle.database.jdbc</groupId>
-              <artifactId>ojdbc21</artifactId>
-              <version>21.7.0.0</version>
-              <scope>provided</scope>
-          </dependency> -->
+        <!-- ⚠️ Oracle JDBC Driver (instale localmente ou adicione repositório Oracle) -->
+        <!--
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc21</artifactId>
+            <version>21.7.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        -->
 
-          <!-- Microsoft SQL Server JDBC Driver
+        <!-- ✅ Microsoft SQL Server JDBC Driver (Java 17+, compatível com Java 21) -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <version>12.2.0.jre17</version>
-        </dependency>-->
+            <version>12.6.1.jre11</version> <!-- última versão compatível com Java 11+, válida para Java 21 -->
+        </dependency>
+
     </dependencies>
 </project>
