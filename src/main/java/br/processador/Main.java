@@ -11,31 +11,44 @@ import java.util.Scanner;
 public class Main {
   public static void main(String[] args) {
     try (Scanner scanner = new Scanner(System.in)) {
-      System.out.print("Informe o tipo do banco (mysql/postgresql/oracle/sqlserver/firebird): ");
+      System.out.println("""
+              SUPORTE (mysql/postgresql/sqlserver)
+              Informe o tipo do banco:""");
       Dialect dialect = Dialect.fromString(scanner.nextLine().trim());
 
       if (dialect == null) {
-        System.err.println("Banco de dados não suportado.");
+        System.err.println("**** Banco de dados não suportado. ****");
         return;
       }
 
-      System.out.print("Informe o host: ");
+      System.out.print("""
+              SUPORTE: (localhost , 127.0.0.1)
+              Informe o host:""");
       String host = scanner.nextLine().trim();
 
-      System.out.print("Informe a porta: ");
+      System.out.print("""
+              SUPORTE: (PG: 5432, SQL SERVER: 1433, MYSQL: 3306)
+              Informe a porta:""");
       String port = scanner.nextLine().trim();
 
       // caminho C:/MeusBancos/bairros.fdb
-      System.out.print("Informe o nome do banco (schema): fb passar o caminho EX: C:/MeusBancos/bairros.fdb: ");
+      System.out.print("""
+              SUPORTE: ( PG: NOMO_DO_BANCO, MYSQL: NOME_BANCO, SQL SERVER: NOME_DO_BANCO
+              Informe o nome do banco (schema):""");
       String database = scanner.nextLine().trim();
 
-      System.out.print("Informe o usuário: ");
+      System.out.print("""
+              SUPORTE: ( PG: postgres, SQL SERVER: sa, MYSQL: root )
+              Informe o usuário:""");
       String user = scanner.nextLine().trim();
 
-      System.out.print("Informe a senha: ");
+      System.out.println("""
+              SUPORTE: ( CADA BANCO TEM SUA PARTICULARIDADE )
+              Informe a senha:""");
       String password = scanner.nextLine().trim();
-
-      System.out.print("Informe o caminho da pasta com arquivos .sql: ");
+      System.out.print("""
+              SUPORTE: ( CAMINHO DA PASTA COMPLETO ) *** ARQUIVO DEVE SER ( ARQUIVO.sql) ***
+              Informe o caminho da pasta com arquivos .sql:""");
       String path = scanner.nextLine().trim();
 
       try (Connection connection = ConnectionFactory.getConnection(dialect, host, port, database, user, password)) {
