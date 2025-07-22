@@ -10,9 +10,17 @@ import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
+    final String VERSAO = "1.0.0";
+
+    System.out.print("""
+            **************************************
+            *         VERSÃO %s               *
+            **************************************
+           
+            """.formatted(VERSAO));
     try (Scanner scanner = new Scanner(System.in)) {
-      System.out.println("""
-              SUPORTE (mysql/postgresql/sqlserver)
+      System.out.print("""
+              SUPORTE (mysql / postgresql / sqlserver)
               Informe o tipo do banco:""");
       Dialect dialect = Dialect.fromString(scanner.nextLine().trim());
 
