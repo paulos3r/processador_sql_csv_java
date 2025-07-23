@@ -59,16 +59,15 @@ public class ConsultaExecutor {
    * @param inputFile The .sql file containing the query.
    */
   private void executarConsultaArquivo(File inputFile) {
-    // Use a more reliable way to construct the output file path
+
     String outputFilePath = inputFile.getAbsolutePath().replaceFirst("\\.sql$", ".csv");
     File outputFile = new File(outputFilePath);
 
-    // Informative message before processing each file
     System.out.println("\nProcessando arquivo: " + inputFile.getName());
 
-    String sql = null; // Declare sql outside try-with-resources to use in catch block
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8")); // Specify UTF-8 encoding
-         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"))) { // Specify UTF-8 encoding
+    String sql = null;
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"));
+         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"))) {
 
       StringBuilder sqlBuilder = new StringBuilder();
 
@@ -77,27 +76,28 @@ public class ConsultaExecutor {
         sqlBuilder.append(lines);
         sqlBuilder.append(" ");
       }
-      sql = sqlBuilder.toString(); // Converte o StringBuilder para String
+      sql = sqlBuilder.toString();
 
-      // Remove todos os caracteres de tabulação, nova linha e retorno de carro,
-      // substituindo-os por um único espaço e depois removendo espaços extras
-      sql = sql.replaceAll("[\\t\\n\\r]+", " ");
+      sql = sql.replaceAll("[\\t\\n\\r]+", " ").trim();
 
-      if (sql == null || sql.trim().isEmpty()) { // Check for empty or null line after trim
+      if (sql == null || sql.trim().isEmpty()) {
         System.out.println("Ignorado: " + inputFile.getName() + " (arquivo vazio ou linha SQL vazia)");
         return;
       }
 
-      // More robust check for SELECT at the beginning, ignoring comments or leading whitespace
-      String trimmedSql = sql.trim();
+      String trimmedSql = sql;
+
       if (!trimmedSql.toLowerCase().startsWith("select")) {
-        System.out.println("Ignorado: " + inputFile.getName() + " (a primeira linha não é um comando SELECT)");
+        System.out.println("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
+        return;
+      }
+      if (trimmedSql.toLowerCase().endsWith("from")) {
+        System.out.println("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e from )");
         return;
       }
 
-      // Attempt to write CSV header (column names)
       try (Statement stmt = connection.createStatement();
-           ResultSet rs = stmt.executeQuery(trimmedSql)) { // Use trimmedSql for execution
+           ResultSet rs = stmt.executeQuery(trimmedSql)) {
 
         ResultSetMetaData meta = rs.getMetaData();
         int columnCount = meta.getColumnCount();
@@ -105,7 +105,7 @@ public class ConsultaExecutor {
         // Write CSV header
         StringBuilder header = new StringBuilder();
         for (int i = 1; i <= columnCount; i++) {
-          header.append(TextSanitizer.sanitize(meta.getColumnLabel(i))); // Use getColumnLabel for display names
+          header.append(TextSanitizer.sanitize(meta.getColumnLabel(i)));
           if (i < columnCount) {
             header.append(";");
           }
@@ -117,11 +117,11 @@ public class ConsultaExecutor {
         while (rs.next()) {
           StringBuilder line = new StringBuilder();
           for (int i = 1; i <= columnCount; i++) {
-            // Get value as String; handle potential nulls from ResultSet
+
             String value = rs.getString(i);
-            // Sanitize and append; escape quotes if value contains semicolons for CSV
-            value = TextSanitizer.sanitize(value != null ? value : ""); // Convert null to empty string before sanitizing
-            // Basic CSV escaping: if value contains semicolon or double quote, enclose in double quotes and escape internal double quotes
+
+            value = TextSanitizer.sanitize(value != null ? value : "");
+
             if (value.contains(";") || value.contains("\"")) {
               value = "\"" + value.replace("\"", "\"\"") + "\"";
             }
@@ -137,20 +137,18 @@ public class ConsultaExecutor {
         System.out.println("Arquivo gerado com sucesso: " + outputFile.getName());
 
       } catch (SQLException e) {
-        // Catch SQLException specifically for database errors
+
         System.err.println("Erro de SQL ao processar consulta do arquivo " + inputFile.getName() + ": " + e.getMessage());
         if (sql != null) {
           System.err.println("Consulta SQL: " + sql);
         }
-        // Log stack trace for detailed debugging
         e.printStackTrace();
       }
     } catch (IOException e) {
-      // Catch IOException specifically for file I/O errors
+
       System.err.println("Erro de I/O ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
-      // Catch any other unexpected exceptions
       System.err.println("Um erro inesperado ocorreu ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
       e.printStackTrace();
     }
