@@ -24,6 +24,7 @@ public class Main {
               1: mysql
               2: postgresql
               3: sqlserver
+              4: firebird
               Informe o tipo do banco: """);
       String bancoInput = scanner.nextLine().trim();
       String banco;
@@ -31,7 +32,7 @@ public class Main {
         case "1" -> banco="mysql";
         case "2" -> banco="postgresql";
         case "3" -> banco="sqlserver";
-
+        case "4" -> banco="firebird";
         default -> {
           System.err.println("**** Banco de dados não suportado. ****");
           return;
@@ -64,7 +65,8 @@ public class Main {
               1: 3306
               2: 5432
               3: 1433
-              4: OUTROS
+              4: 3050
+              5: OUTROS
               Informe a porta:""");
       String port = scanner.nextLine().trim();
 
@@ -72,7 +74,8 @@ public class Main {
         case "1" -> port = "3306";
         case "2" -> port = "5432";
         case "3" -> port = "1433";
-        case "4" -> {
+        case "4" -> port = "3050";
+        case "5" -> {
           System.out.println("Informe o host: ");
           port = scanner.nextLine().trim();
         }
@@ -84,7 +87,7 @@ public class Main {
 
       // caminho C:/MeusBancos/bairros.fdb
       System.out.print("""
-              SUPORTE: ( PG: NOMO_DO_BANCO, MYSQL: NOME_BANCO, SQL SERVER: NOME_DO_BANCO
+              ** INFORME NOME DO BANCO DE DADOS, PARA FIREBIRD INFORME O CAMINHO **
               Informe o nome do banco (schema):""");
       String database = scanner.nextLine().trim();
 
@@ -92,7 +95,8 @@ public class Main {
               1: root
               2: postgres
               3: sa
-              4: outros
+              4: SYSDBA
+              5: outros
               Informe o usuário: """);
       String user = scanner.nextLine().trim();
 
@@ -100,7 +104,8 @@ public class Main {
         case "1" -> user = "root";
         case "2" -> user = "postgres";
         case "3" -> user = "sa";
-        case "4" -> {
+        case "4" -> user = "masterkey";
+        case "5" -> {
           System.out.println("Informe o host: ");
           user = scanner.nextLine().trim();
         }

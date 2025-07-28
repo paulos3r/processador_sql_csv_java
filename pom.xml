@@ -37,6 +37,13 @@
             <version>12.10.1.jre11</version>
         </dependency>
 
+        <!-- Firebird 2.5 (compatível com Java 21) -->
+        <dependency>
+            <groupId>org.firebirdsql.jdbc</groupId>
+            <artifactId>jaybird</artifactId>
+            <version>2.2.14</version>
+        </dependency>
+
         <!-- SLF4J API e implementação com Logback -->
         <dependency>
             <groupId>org.slf4j</groupId>
