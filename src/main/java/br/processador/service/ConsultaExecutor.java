@@ -87,11 +87,14 @@ public class ConsultaExecutor {
 
       String trimmedSql = sql;
 
-      if (!trimmedSql.toLowerCase().startsWith("select")) {
+      boolean verdadeiro=trimmedSql.toLowerCase().startsWith("select");
+      boolean falso=trimmedSql.toLowerCase().endsWith("from");
+
+      if (!trimmedSql.toLowerCase().startsWith("SELECT")) {
         System.out.println("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
         return;
       }
-      if (trimmedSql.toLowerCase().endsWith("from")) {
+      if (trimmedSql.toLowerCase().endsWith("FROM")) {
         System.out.println("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e from )");
         return;
       }

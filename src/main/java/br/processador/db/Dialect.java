@@ -4,7 +4,7 @@ public enum Dialect {
   MYSQL("com.mysql.cj.jdbc.Driver", "jdbc:mysql://%s:%s/%s?useSSL=false&serverTimezone=UTC"),
   POSTGRESQL("org.postgresql.Driver", "jdbc:postgresql://%s:%s/%s"),
   ORACLE("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s:%s"),
-  FIREBIRD("org.firebirdsql.jdbc.FBDriver", "jdbc:firebirdsql://%s/%s"),
+  FIREBIRD("org.firebirdsql.jdbc.FBDriver", "jdbc:firebirdsql://%s:%s/%s"),
   SQLSERVER("com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://%s:%s;databaseName=%s;encrypt=false;trustServerCertificate=false;");
 
   private final String driverClass;

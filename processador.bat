@@ -1,0 +1,1 @@
+java -jar target\processador-1.0-SNAPSHOT.jar

@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
-    final String VERSAO = "1.0.1";
+    final String VERSAO = "1.0.2";
 
     System.out.printf("""
     **************************************

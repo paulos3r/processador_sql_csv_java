@@ -37,11 +37,11 @@
             <version>12.10.1.jre11</version>
         </dependency>
 
-        <!-- Firebird 2.5 (compatível com Java 21) -->
+        <!-- Firebird 2.5 (compatível com Java 21) 2.5, 3.0, 4.0 , 5.0-->
         <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
             <artifactId>jaybird</artifactId>
-            <version>2.2.14</version>
+            <version>5.0.3.java11</version> <!-- ou a versão mais recente -->
         </dependency>
 
         <!-- SLF4J API e implementação com Logback -->
@@ -82,12 +82,22 @@
                     <execution>
                         <phase>package</phase>
                         <goals><goal>shade</goal></goals>
-                        <configuration>
+                        <configuration>  <!--mvn clean package -->
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>br.processador.Main</mainClass>
                                 </transformer>
                             </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
