@@ -66,19 +66,21 @@ public class ConsultaExecutor {
     System.out.println("\nProcessando arquivo: " + inputFile.getName());
 
     String sql = null;
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"));
-         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"))) {
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"))) {
 
       StringBuilder sqlBuilder = new StringBuilder();
 
       String lines;
-      while ((lines=br.readLine()) != null){
+      while ((lines = br.readLine()) != null) {
         sqlBuilder.append(lines);
         sqlBuilder.append(" ");
       }
       sql = sqlBuilder.toString();
 
-      sql = sql.replaceAll("[\\t\\n\\r]+", " ").trim();
+      sql = sql
+              .replaceAll("[\\t\\n\\r]+", " ")
+              .replaceAll(" +", " ")
+              .trim();
 
       if (sql == null || sql.trim().isEmpty()) {
         System.out.println("Ignorado: " + inputFile.getName() + " (arquivo vazio ou linha SQL vazia)");
@@ -87,20 +89,23 @@ public class ConsultaExecutor {
 
       String trimmedSql = sql;
 
-      boolean verdadeiro=trimmedSql.toLowerCase().startsWith("select");
-      boolean falso=trimmedSql.toLowerCase().endsWith("from");
-
-      if (!trimmedSql.toLowerCase().startsWith("SELECT")) {
+      if (!trimmedSql.toLowerCase().startsWith("select")) {
         System.out.println("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
         return;
       }
-      if (trimmedSql.toLowerCase().endsWith("FROM")) {
-        System.out.println("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e from )");
+
+      if (trimmedSql.toLowerCase().endsWith("from")) {
+        System.out.println("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e FROM )");
         return;
       }
+      System.out.println();
+
+      // Somente criar o arquivo de .csv após todas as validações
+
 
       try (Statement stmt = connection.createStatement();
-           ResultSet rs = stmt.executeQuery(trimmedSql)) {
+           ResultSet rs = stmt.executeQuery(trimmedSql);
+           BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), "UTF-8"))) {
 
         ResultSetMetaData meta = rs.getMetaData();
         int columnCount = meta.getColumnCount();
@@ -113,6 +118,7 @@ public class ConsultaExecutor {
             header.append(";");
           }
         }
+
         bw.write(header.toString());
         bw.newLine();
 
@@ -136,7 +142,6 @@ public class ConsultaExecutor {
           bw.write(line.toString());
           bw.newLine();
         }
-
         System.out.println("Arquivo gerado com sucesso: " + outputFile.getName());
 
       } catch (SQLException e) {
