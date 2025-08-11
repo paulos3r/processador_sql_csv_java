@@ -9,6 +9,7 @@ public class TextSanitizer {
             .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
             .replaceAll("[\\t\\n\\r]+", " ")
             .replaceAll(" +", " ")
+            .replaceAll("[ªº°]","")
             .trim();
   }
 }
