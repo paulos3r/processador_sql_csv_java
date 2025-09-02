@@ -78,7 +78,7 @@ public class Main {
         case "3" -> port = "1433";
         case "4" -> port = "3050";
         case "5" -> {
-          System.out.println("Informe o host: ");
+          System.out.println("Informe o porta: ");
           port = scanner.nextLine().trim();
         }
         default -> {
@@ -110,7 +110,7 @@ public class Main {
         case "4" -> user = "SYSDBA";
         case "5" -> user = "";
         case "6" -> {
-          System.out.println("Informe o host: ");
+          System.out.println("Informe o usuário: ");
           user = scanner.nextLine().trim();
         }
         default -> {

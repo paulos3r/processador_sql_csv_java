@@ -88,9 +88,8 @@ public class ConsultaExecutor {
       }
 
       String trimmedSql = sql;
-      Boolean q = trimmedSql.toLowerCase().startsWith("select");
-      Boolean a = trimmedSql.toLowerCase().startsWith("with");
-      if (!trimmedSql.toLowerCase().startsWith("select") && trimmedSql.toLowerCase().startsWith("with") ) {
+
+      if (!trimmedSql.toLowerCase().startsWith("select") && !trimmedSql.toLowerCase().startsWith("with") ) {
         System.out.println("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
         return;
       }
