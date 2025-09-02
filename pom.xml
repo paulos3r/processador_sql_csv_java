@@ -37,12 +37,25 @@
             <version>12.10.1.jre11</version>
         </dependency>
 
+        <!-- SQLite -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.46.0.0</version> <!-- versão estável mais recente -->
+        </dependency>
+
         <!-- Firebird 2.5 (compatível com Java 21) 2.5, 3.0, 4.0 , 5.0-->
         <dependency>
             <groupId>org.firebirdsql.jdbc</groupId>
             <artifactId>jaybird</artifactId>
-            <version>5.0.3.java11</version> <!-- ou a versão mais recente -->
+            <version>5.0.3.java11</version> <!-- ou a versão mais recente-->
         </dependency>
+
+        <!-- <dependency>
+            <groupId>org.firebirdsql.jdbc</groupId>
+            <artifactId>jaybird</artifactId>
+            <version>3.0.12</version>
+        </dependency>-->
 
         <!-- SLF4J API e implementação com Logback -->
         <dependency>
@@ -50,6 +63,7 @@
             <artifactId>slf4j-api</artifactId>
             <version>2.0.13</version>
         </dependency>
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

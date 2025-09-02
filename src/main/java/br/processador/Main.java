@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
-    final String VERSAO = "1.0.2";
+    final String VERSAO = "1.0.5";
 
     System.out.printf("""
     **************************************
@@ -25,6 +25,7 @@ public class Main {
               2: postgresql
               3: sqlserver
               4: firebird
+              5: sqlite
               Informe o tipo do banco: """);
       String bancoInput = scanner.nextLine().trim();
       String banco;
@@ -33,6 +34,7 @@ public class Main {
         case "2" -> banco="postgresql";
         case "3" -> banco="sqlserver";
         case "4" -> banco="firebird";
+        case "5" -> banco="sqlite";
         default -> {
           System.err.println("**** Banco de dados não suportado. ****");
           return;
@@ -96,7 +98,8 @@ public class Main {
               2: postgres
               3: sa
               4: SYSDBA
-              5: outros
+              5: sqlite
+              6: outros
               Informe o usuário: """);
       String user = scanner.nextLine().trim();
 
@@ -104,8 +107,9 @@ public class Main {
         case "1" -> user = "root";
         case "2" -> user = "postgres";
         case "3" -> user = "sa";
-        case "4" -> user = "masterkey";
-        case "5" -> {
+        case "4" -> user = "SYSDBA";
+        case "5" -> user = "";
+        case "6" -> {
           System.out.println("Informe o host: ");
           user = scanner.nextLine().trim();
         }

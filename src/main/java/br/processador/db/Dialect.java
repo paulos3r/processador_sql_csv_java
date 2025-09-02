@@ -5,7 +5,8 @@ public enum Dialect {
   POSTGRESQL("org.postgresql.Driver", "jdbc:postgresql://%s:%s/%s"),
   ORACLE("oracle.jdbc.driver.OracleDriver", "jdbc:oracle:thin:@%s:%s:%s"),
   FIREBIRD("org.firebirdsql.jdbc.FBDriver", "jdbc:firebirdsql://%s:%s/%s"),
-  SQLSERVER("com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://%s:%s;databaseName=%s;encrypt=false;trustServerCertificate=false;");
+  SQLSERVER("com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://%s:%s;databaseName=%s;encrypt=false;trustServerCertificate=false;"),
+  SQLITE("org.sqlite.JDBC","jdbc:sqlite:%s%s%s");
 
   private final String driverClass;
   private final String urlPattern;
@@ -30,6 +31,7 @@ public enum Dialect {
       case "oracle"->ORACLE;
       case "sqlserver"->SQLSERVER;
       case "firebird" -> FIREBIRD;
+      case "sqlite" -> SQLITE;
       default -> null;
     };
   }
