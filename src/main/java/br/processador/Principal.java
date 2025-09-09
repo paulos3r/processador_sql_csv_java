@@ -9,7 +9,6 @@ import br.processador.db.Dialect;
 import br.processador.service.ConsultaExecutor;
 import java.io.File;
 import java.sql.Connection;
-import java.util.Scanner;
 import javax.swing.JFileChooser;
 
 /**
@@ -287,24 +286,15 @@ public class Principal extends javax.swing.JFrame {
 
             try {
                 String banco= jbxDatabase.getSelectedItem().toString();
-                
                 Dialect dialect = Dialect.fromString(banco);
-
                 String host = txtHost.getText();
-
                 String port = txtPorta.getText();
-                
                 String database = txtNomeBanco.getText();
-
                 String user = txtUsuario.getText();
-
-
                 char[] charPassword = pswSenha.getPassword();
                 String password = new String(charPassword);
 
-                
                 String path = txtCaminhoArquivoSql.getText();
-
                 assert dialect != null;
 
                 try (Connection connection = ConnectionFactory.getConnection(dialect, host, port, database, user, password)) {
