@@ -1,5 +1,6 @@
 package br.processador.service;
 
+import br.processador.Principal;
 import br.processador.util.TextSanitizer; // Assuming this utility exists
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.sql.SQLException; // Import SQLException
 import java.sql.Statement;
 
 public class ConsultaExecutor {
-
+  private final Principal principal;
   private final Connection connection;
 
   public ConsultaExecutor(Connection connection) {
@@ -19,6 +20,7 @@ public class ConsultaExecutor {
       throw new IllegalArgumentException("A conexão com o banco de dados não pode ser nula.");
     }
     this.connection = connection;
+      this.principal = null;
   }
 
   /**
@@ -41,15 +43,15 @@ public class ConsultaExecutor {
     File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".sql"));
 
     if (files == null || files.length == 0) {
-      System.out.println("Nenhum arquivo .sql encontrado na pasta: " + folder.getAbsolutePath());
-      return;
+      throw new IllegalAccessError("Nenhum arquivo .sql encontrado na pasta: " + folder.getAbsolutePath());
     }
-
-    System.out.println("Processando " + files.length + " arquivo(s) SQL...");
+    
+    principal.adicionarLog("Processando " + files.length + " arquivo(s) SQL...");
+    
     for (File file : files) {
       executarConsultaArquivo(file); // Corrected method name
     }
-    System.out.println("Processamento de consultas concluído.");
+    principal.adicionarLog("Processamento de consultas concluído.");
   }
 
   /**
@@ -63,7 +65,7 @@ public class ConsultaExecutor {
     String outputFilePath = inputFile.getAbsolutePath().replaceFirst("\\.sql$", ".csv");
     File outputFile = new File(outputFilePath);
 
-    System.out.println("\nProcessando arquivo: " + inputFile.getName());
+    principal.adicionarLog("\nProcessando arquivo: " + inputFile.getName());
 
     String sql = null;
     try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(inputFile), "UTF-8"))) {
@@ -83,19 +85,19 @@ public class ConsultaExecutor {
               .trim();
 
       if (sql == null || sql.trim().isEmpty()) {
-        System.out.println("Ignorado: " + inputFile.getName() + " (arquivo vazio ou linha SQL vazia)");
+        principal.adicionarLog("Ignorado: " + inputFile.getName() + " (arquivo vazio ou linha SQL vazia)");
         return;
       }
 
       String trimmedSql = sql;
 
       if (!trimmedSql.toLowerCase().startsWith("select") && !trimmedSql.toLowerCase().startsWith("with") ) {
-        System.out.println("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
+        principal.adicionarLog("Ignorado: " + inputFile.getName() + " ( a primeira linha não é um comando SELECT )");
         return;
       }
 
       if (trimmedSql.toLowerCase().endsWith("from")) {
-        System.out.println("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e FROM )");
+        principal.adicionarLog("Ignorado: " + inputFile.getName() + " ( o arquivo não e um select valido pois o ultima linha e FROM )");
         return;
       }
       System.out.println();
@@ -142,22 +144,20 @@ public class ConsultaExecutor {
           bw.write(line.toString());
           bw.newLine();
         }
-        System.out.println("Arquivo gerado com sucesso: " + outputFile.getName());
+        principal.adicionarLog("Arquivo gerado com sucesso: " + outputFile.getName());
 
       } catch (SQLException e) {
-
-        System.err.println("Erro de SQL ao processar consulta do arquivo " + inputFile.getName() + ": " + e.getMessage());
+        principal.adicionarLog("Erro de SQL ao processar consulta do arquivo " + inputFile.getName() + ": " + e.getMessage());
         if (sql != null) {
-          System.err.println("Consulta SQL: " + sql);
+          principal.adicionarLog("Consulta SQL: " + sql);
         }
         e.printStackTrace();
       }
     } catch (IOException e) {
-
-      System.err.println("Erro de I/O ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
+      principal.adicionarLog("Erro de I/O ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
-      System.err.println("Um erro inesperado ocorreu ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
+      principal.adicionarLog("Um erro inesperado ocorreu ao processar arquivo " + inputFile.getName() + ": " + e.getMessage());
       e.printStackTrace();
     }
   }

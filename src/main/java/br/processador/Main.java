@@ -1,16 +1,21 @@
 package br.processador;
 
-import br.processador.db.ConnectionFactory;
+/*import br.processador.db.ConnectionFactory;
 import br.processador.db.Dialect;
 import br.processador.service.ConsultaExecutor;
 
 import java.io.File;
 import java.sql.Connection;
-import java.util.Scanner;
+import java.util.Scanner;*/
 
 public class Main {
   public static void main(String[] args) {
-    final String VERSAO = "1.0.5";
+      
+    
+    Principal principal = new Principal();
+    principal.setVisible(true);
+     
+    /*final String VERSAO = "1.0.5";
 
     System.out.printf("""
     **************************************
@@ -139,6 +144,6 @@ public class Main {
     } catch (Exception e) {
       System.err.println("Erro: " + e.getMessage());
       e.printStackTrace();
-    }
+    } */
   }
 }
