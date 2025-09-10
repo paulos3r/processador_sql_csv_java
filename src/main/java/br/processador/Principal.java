@@ -10,6 +10,7 @@ import br.processador.service.ConsultaExecutor;
 import java.io.File;
 import java.sql.Connection;
 import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -23,16 +24,20 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         
-        final String VERSAO = "2.0.1";
+        final String VERSAO = "versão 2.0.0";
         jLabel1.setText(VERSAO);
         
         
     }
-    public void adicionarLog(String log){
-        txaLogsProcessamento.append(log + "\n");
-
-        txaLogsProcessamento.setCaretPosition(txaLogsProcessamento.getDocument().getLength());
-        }
+    
+    public void adicionarLog( String log ){
+       
+            SwingUtilities.invokeLater(() -> {
+                txaLogsProcessamento.append(log + "\n");
+                txaLogsProcessamento.setCaretPosition(txaLogsProcessamento.getDocument().getLength());
+            });
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,25 +71,29 @@ public class Principal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jbxDatabase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "mysql", "postgresql", "sqlserver", "firebird", "sqlite" }));
+        jPanel1.setOpaque(false);
+
+        jbxDatabase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "mysql", "postgresql", "sqlserver", "firebird", "sqlite" }));
+        jbxDatabase.setToolTipText("");
         jbxDatabase.setName("boxBancoDados"); // NOI18N
 
-        txtHost.setText("host");
         txtHost.setToolTipText("localhost ou 127.0.0.1 etc");
         txtHost.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtHost.setName("txtHost"); // NOI18N
 
-        txtPorta.setText("porta");
         txtPorta.setToolTipText("mysql: 3306, PG: 5432, SQL SERVER: 1433, FB: 3050");
         txtPorta.setName("txtPorta"); // NOI18N
 
-        txtNomeBanco.setText("Nome Banco");
         txtNomeBanco.setToolTipText("nome do banco de dados");
 
-        txtCaminhoArquivoSql.setText("C:\\scripts");
+        txtCaminhoArquivoSql.setText("D:\\TESTE");
         txtCaminhoArquivoSql.setToolTipText("Seleciono o caminho do arquivo .sql para gerar os .csv");
 
         jButton1.setBackground(new java.awt.Color(67, 146, 229));
@@ -100,13 +109,14 @@ public class Principal extends javax.swing.JFrame {
 
         txaLogsProcessamento.setColumns(20);
         txaLogsProcessamento.setRows(5);
+        txaLogsProcessamento.setToolTipText("");
         jScrollPane1.setViewportView(txaLogsProcessamento);
 
-        pswSenha.setText("senha");
+        pswSenha.setText("DADOS");
         pswSenha.setToolTipText("senha do banco de dados");
         pswSenha.setName("pswSenha"); // NOI18N
 
-        jLabel1.setText("versão: 2.0.0");
+        jLabel1.setText("versão: 0.0.0");
         jLabel1.setToolTipText("");
 
         jButton2.setText("Buscar");
@@ -116,7 +126,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        txtUsuario.setText("sa");
         txtUsuario.setToolTipText("Usuário exemplo: root, postgres, SYSDBA ou sa ");
 
         jLabel2.setText("Database");
@@ -129,7 +138,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel6.setText("Porta");
 
-        jLabel7.setText("Nome do Banco");
+        jLabel7.setText("Banco");
 
         jLabel8.setText("Selecione o caminho dos Arquivos .sql");
 
@@ -146,27 +155,52 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.setText(";");
+        jTextField1.setToolTipText("");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Delimitador");
+
+        jTextField2.setToolTipText("ORCL, XE");
+
+        jLabel12.setText("Serviço");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addComponent(txtCaminhoArquivoSql, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(8, 8, 8)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton3)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(246, 246, 246)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel7))
+                                .addGap(28, 28, 28)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField2)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtNomeBanco))
+                                        .addComponent(jLabel11)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtNomeBanco)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -188,17 +222,20 @@ public class Principal extends javax.swing.JFrame {
                                             .addComponent(txtUsuario)
                                             .addComponent(jbxDatabase, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(pswSenha)))
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                    .addComponent(jButton2)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtCaminhoArquivoSql, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(154, 154, 154))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGap(0, 158, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,19 +267,25 @@ public class Principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtNomeBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                            .addComponent(txtNomeBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCaminhoArquivoSql, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCaminhoArquivoSql, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1)
+                        .addGap(0, 6, Short.MAX_VALUE))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -285,7 +328,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
 
             try {
-                String banco= jbxDatabase.getSelectedItem().toString();
+                String banco=jbxDatabase.getSelectedItem().toString();
                 Dialect dialect = Dialect.fromString(banco);
                 String host = txtHost.getText();
                 String port = txtPorta.getText();
@@ -298,12 +341,12 @@ public class Principal extends javax.swing.JFrame {
                 assert dialect != null;
 
                 try (Connection connection = ConnectionFactory.getConnection(dialect, host, port, database, user, password)) {
-                    ConsultaExecutor executor = new ConsultaExecutor(connection);
+                    ConsultaExecutor executor = new ConsultaExecutor(connection,this);
                     executor.executarConsultasEmPasta(new File(path));
                 }
 
             } catch (Exception e) {
-                txaLogsProcessamento.setText("Erro: " + e.getMessage());
+                adicionarLog("Erro: " + e.getMessage());
                 System.err.println("Erro: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -321,6 +364,10 @@ public class Principal extends javax.swing.JFrame {
             txtNomeBanco.setText(arquivoSelecionado.getPath());
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,6 +410,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -373,6 +422,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JComboBox<String> jbxDatabase;
     private javax.swing.JPasswordField pswSenha;
     private javax.swing.JTextArea txaLogsProcessamento;
