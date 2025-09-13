@@ -51,7 +51,6 @@ public class Principal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jbxDatabase = new javax.swing.JComboBox<>();
         txtHost = new javax.swing.JTextField();
-        txtPorta = new javax.swing.JTextField();
         txtNomeBanco = new javax.swing.JTextField();
         txtCaminhoArquivoSql = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -75,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        cbxPorta = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,10 +88,8 @@ public class Principal extends javax.swing.JFrame {
         txtHost.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtHost.setName("txtHost"); // NOI18N
 
-        txtPorta.setToolTipText("mysql: 3306, PG: 5432, SQL SERVER: 1433, FB: 3050");
-        txtPorta.setName("txtPorta"); // NOI18N
-
-        txtNomeBanco.setToolTipText("nome do banco de dados");
+        txtNomeBanco.setText("D:\\CLIENTES");
+        txtNomeBanco.setToolTipText("nome do banco de dados ou caminho do banco para firebird e sqlite");
 
         txtCaminhoArquivoSql.setText("D:\\TESTE");
         txtCaminhoArquivoSql.setToolTipText("Seleciono o caminho do arquivo .sql para gerar os .csv");
@@ -169,6 +167,9 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel12.setText("Serviço");
 
+        cbxPorta.setEditable(true);
+        cbxPorta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "5432 - Postgres", "3306 - Mysql", "1433 - Sql Server", "         - SQLite", "3050 - firebird 2.5 (x86)", "3051 - firebird 2.5 (x64)", "3052 - firebird 3.0 (x86)", "3053 - firebird 3.0 (x64)", "3054 - firebird 4.0 (x86)", "3055 - firebird 4.0 (x64)", "3056 - firebird 5.0 (x86)", "3057 - firebird 5.0 (x64)" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -214,11 +215,11 @@ public class Principal extends javax.swing.JFrame {
                                                 .addGap(18, 18, 18)))
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel6)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(txtPorta, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(cbxPorta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                             .addComponent(txtUsuario)
                                             .addComponent(jbxDatabase, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(pswSenha)))
@@ -234,7 +235,7 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 158, Short.MAX_VALUE)))
+                        .addGap(0, 110, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -263,7 +264,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(txtHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(txtPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbxPorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -331,7 +332,7 @@ public class Principal extends javax.swing.JFrame {
                 String banco=jbxDatabase.getSelectedItem().toString();
                 Dialect dialect = Dialect.fromString(banco);
                 String host = txtHost.getText();
-                String port = txtPorta.getText();
+                String port = cbxPorta.getSelectedItem().toString().trim().substring(0, 4);
                 String database = txtNomeBanco.getText();
                 String user = txtUsuario.getText();
                 char[] charPassword = pswSenha.getPassword();
@@ -405,6 +406,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbxPorta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -430,7 +432,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField txtCaminhoArquivoSql;
     private javax.swing.JTextField txtHost;
     private javax.swing.JTextField txtNomeBanco;
-    private javax.swing.JTextField txtPorta;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

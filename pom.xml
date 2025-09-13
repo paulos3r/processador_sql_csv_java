@@ -51,12 +51,6 @@
             <version>5.0.3.java11</version> <!-- ou a versão mais recente-->
         </dependency>
 
-        <!-- <dependency>
-            <groupId>org.firebirdsql.jdbc</groupId>
-            <artifactId>jaybird</artifactId>
-            <version>3.0.12</version>
-        </dependency>-->
-
         <!-- SLF4J API e implementação com Logback -->
         <dependency>
             <groupId>org.slf4j</groupId>

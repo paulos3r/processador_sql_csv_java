@@ -100,11 +100,11 @@
                                           </Group>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" attributes="0">
-                                                  <Component id="txtHost" min="-2" pref="110" max="-2" attributes="0"/>
+                                                  <Component id="txtHost" min="-2" pref="98" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                  <Component id="txtPorta" pref="88" max="32767" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="cbxPorta" max="32767" attributes="0"/>
                                               </Group>
                                               <Component id="txtUsuario" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jbxDatabase" alignment="1" max="32767" attributes="0"/>
@@ -129,7 +129,7 @@
                       <Component id="jScrollPane1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel10" min="-2" pref="257" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="158" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="110" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -166,7 +166,7 @@
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtHost" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtPorta" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbxPorta" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -228,15 +228,10 @@
             <Property name="name" type="java.lang.String" value="txtHost" noResource="true"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtPorta">
-          <Properties>
-            <Property name="toolTipText" type="java.lang.String" value="mysql: 3306, PG: 5432, SQL SERVER: 1433, FB: 3050"/>
-            <Property name="name" type="java.lang.String" value="txtPorta" noResource="true"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="txtNomeBanco">
           <Properties>
-            <Property name="toolTipText" type="java.lang.String" value="nome do banco de dados"/>
+            <Property name="text" type="java.lang.String" value="D:\u005cCLIENTES" containsInvalidXMLChars="true"/>
+            <Property name="toolTipText" type="java.lang.String" value="nome do banco de dados ou caminho do banco para firebird e sqlite"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCaminhoArquivoSql">
@@ -385,6 +380,31 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Servi&#xe7;o"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbxPorta">
+          <Properties>
+            <Property name="editable" type="boolean" value="true"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="13">
+                <StringItem index="0" value=" "/>
+                <StringItem index="1" value="5432 - Postgres"/>
+                <StringItem index="2" value="3306 - Mysql"/>
+                <StringItem index="3" value="1433 - Sql Server"/>
+                <StringItem index="4" value="         - SQLite"/>
+                <StringItem index="5" value="3050 - firebird 2.5 (x86)"/>
+                <StringItem index="6" value="3051 - firebird 2.5 (x64)"/>
+                <StringItem index="7" value="3052 - firebird 3.0 (x86)"/>
+                <StringItem index="8" value="3053 - firebird 3.0 (x64)"/>
+                <StringItem index="9" value="3054 - firebird 4.0 (x86)"/>
+                <StringItem index="10" value="3055 - firebird 4.0 (x64)"/>
+                <StringItem index="11" value="3056 - firebird 5.0 (x86)"/>
+                <StringItem index="12" value="3057 - firebird 5.0 (x64)"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
